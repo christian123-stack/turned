@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitung Keuntungan Penjualan Per Bulan</title>
+    <style>
+        /* Global Style */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 30px;
+            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0px 12px black;
+        }
+
+        h1, h2 {
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: inline-block;
+            width: 150px; /* Lebar tetap untuk label */
+        }
+
+        input[type="number"] {
+            width: calc(100% - 160px); /* Input mengisi sisa ruang */
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Flexbox untuk barang-item */
+        .barang-item {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .barang-item div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .barang-item div label {
+            flex-shrink: 0;
+        }
+
+        .barang-item div input {
+            flex-grow: 1;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hitung Keuntungan Penjualan Per Bulan</h1>
+
+        <label for="hargaSewa">Harga Sewa Toko Per Bulan:</label>
+        <input type="number" id="hargaSewa" required>
+
+        <label for="hargaDistribusi">Harga Distribusi Per Bulan:</label>
+        <input type="number" id="hargaDistribusi" required>
+
+        <label for="biayaListrik">Biaya Listrik:</label>
+        <input type="number" id="biayaListrik" required>
+
+        <label for="biayaModal">Biaya Modal Total:</label>
+        <input type="number" id="biayaModal" required>
+
+        <h2>Masukkan Detail Barang</h2>
+
+        <div id="barangInputs">
+            <h2>barang 1</h2>
+            <div class="barang-item">
+                <div>
+                    <label for="hargaBarang1">Harga jual Barang 1:</label>
+                    <input type="number" id="hargaBarang1">
+                </div>
+                <div>
+                    <label for="jumlahBarang1">Barang yang terjual 1:</label>
+                    <input type="number" id="jumlahBarang1">
+                </div>
+            </div>
+
+            <h2>barang 2</h2>
+            <div class="barang-item">
+                <div>
+                    <label for="hargaBarang2">Harga jual Barang 2:</label>
+                    <input type="number" id="hargaBarang2">
+                </div>
+                <div>
+                    <label for="jumlahBarang2">Barang yang terjual 2:</label>
+                    <input type="number" id="jumlahBarang2">
+                </div>
+            </div>
+
+            <h2>barang 3</h2>
+            <div class="barang-item">
+                <div>
+                    <label for="hargaBarang3">Harga jual Barang 3:</label>
+                    <input type="number" id="hargaBarang3">
+                </div>
+                <div>
+                    <label for="jumlahBarang3">Barang yang terjual 3:</label>
+                    <input type="number" id="jumlahBarang3">
+                </div>
+            </div>
+
+            <h2>barang 4</h2>
+            <div class="barang-item">
+                <div>
+                    <label for="hargaBarang4">Harga jual Barang 4:</label>
+                    <input type="number" id="hargaBarang4">
+                </div>
+                <div>
+                    <label for="jumlahBarang4">Barang yang terjual 4:</label>
+                    <input type="number" id="jumlahBarang4">
+                </div>
+            </div>
+
+            <h2>barang 5</h2>
+            <div class="barang-item">
+                <div>
+                    <label for="hargaBarang5">Harga jual Barang 5:</label>
+                    <input type="number" id="hargaBarang5">
+                </div>
+                <div>
+                    <label for="jumlahBarang5">Barang yang terjual 5:</label>
+                    <input type="number" id="jumlahBarang5">
+                </div>
+            </div>
+        </div>
+
+        <button onclick="hitungKeuntungan()">Hitung Keuntungan</button>
+
+        <h2 id="result"></h2>
+    </div>
+
+    <script>
+        function hitungKeuntungan() {
+            // Ambil input biaya tetap
+            const hargaSewa = parseFloat(document.getElementById("hargaSewa").value);
+            const hargaDistribusi = parseFloat(document.getElementById("hargaDistribusi").value);
+            const biayaListrik = parseFloat(document.getElementById("biayaListrik").value);
+            const biayaModalTotal = parseFloat(document.getElementById("biayaModal").value);
+
+            // Validasi input biaya tetap
+            if (isNaN(hargaSewa) || isNaN(hargaDistribusi) || isNaN(biayaListrik) || isNaN(biayaModalTotal)) {
+                alert("Mohon masukkan semua biaya tetap dengan benar.");
+                return;
+            }
+
+            // Inisialisasi variabel untuk total pendapatan dan total modal
+            let totalPendapatan = 0;
+            let totalModal = biayaModalTotal; // Biaya modal total
+
+            let totalKeuntungan = 0;
+
+            // Menghitung keuntungan untuk setiap barang
+            for (let i = 1; i <= 5; i++) {
+                const hargaJual = parseFloat(document.getElementById(`hargaBarang${i}`).value);
+                const jumlahTerjual = parseInt(document.getElementById(`jumlahBarang${i}`).value);
+
+                // Validasi input untuk barang
+                if (!isNaN(hargaJual) && hargaJual > 0 && !isNaN(jumlahTerjual) && jumlahTerjual > 0) {
+                    // Hitung pendapatan dari barang (harga jual * jumlah terjual)
+                    totalPendapatan += hargaJual * jumlahTerjual;
+                }
+            }
+
+            // Hitung total biaya tetap
+            const totalBiayaTetap = hargaSewa + hargaDistribusi + biayaListrik;
+
+            // Keuntungan bersih (total pendapatan - total biaya tetap - total modal)
+            const keuntunganBersih = totalPendapatan - (totalBiayaTetap + totalModal);
+
+            // Tampilkan hasil
+            document.getElementById("result").innerHTML = `Keuntungan Anda per bulan adalah: Rp ${keuntunganBersih.toLocaleString()}`;
+        }
+    </script>
+
+</body>
+</html>
